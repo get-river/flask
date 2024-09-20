@@ -6,37 +6,31 @@ from flask import Flask, jsonify, request
 app = Flask(__name__)
 
 
-@app.route("/", methods=["GET", "POST"])
+@app.route("/", methods=["GET"])
 def index():
-    if request.method == "POST":
-        return (
-            jsonify({"status": "success", "message": "Data received and logged"}),
-            200,
-        )
+    # Handle GET request
+    return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
 
-        # Get the raw data from the request
-        data = request.get_data(as_text=True)
 
-        # Log the received data
-        print("Received POST data:")
-        print(data)
+@app.route("/test", methods=["POST"])
+def test_post():
+    # Get the raw data from the request
+    data = request.get_data(as_text=True)
 
-        # Try to parse and pretty print JSON if possible
-        try:
-            json_data = json.loads(data)
-            print("Parsed JSON data:")
-            print(json.dumps(json_data, indent=2))
-        except json.JSONDecodeError:
-            print("Received data is not valid JSON")
+    # Log the received data
+    print("Received POST data:")
+    print(data)
 
-        # Return a success response
-        return (
-            jsonify({"status": "success", "message": "Data received and logged"}),
-            200,
-        )
-    else:
-        # Handle GET request
-        return jsonify({"Choo Choo": "Welcome to your Flask app 🚅"})
+    # Try to parse and pretty print JSON if possible
+    try:
+        json_data = json.loads(data)
+        print("Parsed JSON data:")
+        print(json.dumps(json_data, indent=2))
+    except json.JSONDecodeError:
+        print("Received data is not valid JSON")
+
+    # Return a success response
+    return jsonify({"status": "success", "message": "Data received and logged"}), 200
 
 
 if __name__ == "__main__":
