@@ -9,6 +9,11 @@ app = Flask(__name__)
 @app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
+        return (
+            jsonify({"status": "success", "message": "Data received and logged"}),
+            200,
+        )
+
         # Get the raw data from the request
         data = request.get_data(as_text=True)
 
